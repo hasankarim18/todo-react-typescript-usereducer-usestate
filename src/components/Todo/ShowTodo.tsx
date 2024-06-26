@@ -19,6 +19,10 @@ const ShowTodo = () => {
     };
   }, [searchQuery]);
 
+  const completeAllHandler = () => {
+    todoDispatch({ type: typeConstants.COMPLETE_ALL });
+  };
+
   const taskCompletionToggle = (id: string) => {
     //  console.log(id);
     todoDispatch({ type: typeConstants.TASK_COMPLETTION_TOGGLE, payload: id });
@@ -34,6 +38,16 @@ const ShowTodo = () => {
 
   return (
     <div className="col-span-8 border border-purple-400 p-4 rounded-lg">
+      <div className="flex justify-end mb-2">
+        <button
+          onClick={() => {
+            completeAllHandler();
+          }}
+          className="badge badge-warning"
+        >
+          Make all complete{" "}
+        </button>
+      </div>
       <div className="text-xl font-semibold flex items-center gap-4 justify-between  mb-2">
         <div>
           <span className="underline"> No. of Tasks yet to be done: </span>

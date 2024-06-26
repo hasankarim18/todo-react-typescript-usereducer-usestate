@@ -17,7 +17,10 @@ export const TodoContext = createContext<TDefaultValue>(defaultValue);
 const todoReducer = (state: TTodo[], action: TAction): TTodo[] => {
   switch (action.type) {
     case typeConstants.ADD_TODO:
-      if (typeof action.payload !== "string") {
+      if (
+        typeof action.payload !== "string" &&
+        typeof action.payload !== "undefined"
+      ) {
         return [...state, action.payload];
       }
       return [...state];
@@ -31,7 +34,12 @@ const todoReducer = (state: TTodo[], action: TAction): TTodo[] => {
       });
     case typeConstants.DELETE_TODO:
       return state.filter((todo) => todo.id !== action.payload);
-
+    case typeConstants.COMPLETE_ALL:
+      return state.map((todo) => {
+        return { ...todo, isCompleted: true };
+      });
+    case typeConstants.INCOMPLETE_ALL:
+      return state.map((todo) => ({ ...todo, isCompleted: false }));
     default:
       return state;
   }

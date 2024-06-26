@@ -19,6 +19,10 @@ const CompletedTodo = () => {
     };
   }, [searchQuery]);
 
+  const inCompleteAllHandler = () => {
+    todoDispatch({ type: typeConstants.INCOMPLETE_ALL });
+  };
+
   const taskCompletionToggle = (id: string) => {
     //  console.log(id);
     todoDispatch({ type: typeConstants.TASK_COMPLETTION_TOGGLE, payload: id });
@@ -46,6 +50,16 @@ const CompletedTodo = () => {
 
   return (
     <div className="col-span-12 border border-purple-400 p-4 rounded-lg">
+      <div className="flex justify-end mb-2">
+        <button
+          onClick={() => {
+            inCompleteAllHandler();
+          }}
+          className="badge badge-warning"
+        >
+          Make all incomplete{" "}
+        </button>
+      </div>
       <div className="text-xl font-semibold  flex justify-between border-b-2 pb-2 mb-2">
         <div className="">
           <span className="underline"> No. of Completed Tasks: </span>

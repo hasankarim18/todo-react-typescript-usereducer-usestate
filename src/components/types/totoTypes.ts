@@ -21,7 +21,12 @@ export type ToggleTaskCompletion = {
   payload: string;
 };
 
-export type TAction = AddAction | ToggleTaskCompletion;
+export type CompleteAllTodo = {
+  type: typeof typeConstants.COMPLETE_ALL;
+  payload?: string;
+};
+
+export type TAction = AddAction | ToggleTaskCompletion | CompleteAllTodo;
 
 export type TDefaultValue = {
   todoState: TTodo[];
