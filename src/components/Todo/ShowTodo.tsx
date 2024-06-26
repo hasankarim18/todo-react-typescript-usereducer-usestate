@@ -24,7 +24,9 @@ const ShowTodo = () => {
     todoDispatch({ type: typeConstants.TASK_COMPLETTION_TOGGLE, payload: id });
   };
 
-  const incompleteTodo = todoState.filter(
+  const incompleteTodos = todoState.filter((todo) => !todo.isCompleted);
+
+  const filteredTodos = todoState.filter(
     (todo) =>
       !todo.isCompleted &&
       todo.title.toLowerCase().includes(debounceQuery.toLocaleLowerCase())
@@ -35,7 +37,7 @@ const ShowTodo = () => {
       <div className="text-xl font-semibold flex items-center gap-4 justify-between  mb-2">
         <div>
           <span className="underline"> No. of Tasks yet to be done: </span>
-          <span>{incompleteTodo.length}</span>
+          <span>{filteredTodos.length}</span>
         </div>
         <div className="flex gap-2 items-center">
           <label htmlFor="">Search:</label>
@@ -50,16 +52,23 @@ const ShowTodo = () => {
       <ul>
         {(() => {
           if (todoState.length === 0) {
+            return (
+              <div className="text-xl text-success">
+                No pending task - Add todo
+              </div>
+            );
+          }
+          if (incompleteTodos.length === 0) {
             return <div className="text-xl text-success">No pending task</div>;
           }
 
-          if (incompleteTodo.length === 0) {
+          if (filteredTodos.length === 0) {
             return <div className="text-xl text-warning">No search found</div>;
           }
 
           return (
             <>
-              {incompleteTodo.map((todo: TTodo, i) => {
+              {filteredTodos.map((todo: TTodo, i) => {
                 if (!todo.isCompleted) {
                   return (
                     <li
