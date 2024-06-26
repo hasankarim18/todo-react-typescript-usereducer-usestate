@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { typeConstants } from "../../constants/constants";
+import { initialState, typeConstants } from "../../constants/constants";
 import {
   TAction,
   TDefaultValue,
@@ -38,8 +38,6 @@ const todoReducer = (state: TTodo[], action: TAction): TTodo[] => {
 };
 
 const TodoContextProvider = ({ children }: TodoProviderProps) => {
-  const initialState: TTodo[] = [];
-
   const [todoState, todoDispatch] = useReducer(todoReducer, initialState);
   const values = {
     todoState,
