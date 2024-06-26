@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { typeConstants } from "../constants/constants";
 import { TodoContext } from "../contexts/TodoContext/TodoContextProvider";
 import { TTodo } from "../types/totoTypes";
+import { deleteTodo } from "../utils/lib";
 
 const ShowTodo = () => {
   const { todoState, todoDispatch } = useContext(TodoContext);
@@ -11,21 +12,26 @@ const ShowTodo = () => {
     todoDispatch({ type: typeConstants.TASK_COMPLETTION_TOGGLE, payload: id });
   };
 
-  if (todoState.length === 0) {
+  const incompleteTodo = todoState.filter((todo) => !todo.isCompleted);
+
+  if (incompleteTodo.length === 0) {
     return (
       <div className="col-span-8 border border-purple-400 p-4 rounded-lg">
         <h3 className="text-xl font-semibold text-purple-400">
-          {" "}
-          Add todo to show todo list{" "}
+          No task available
         </h3>
       </div>
     );
   }
 
   return (
-    <div className="col-span-8">
+    <div className="col-span-8 border border-purple-400 p-4 rounded-lg">
+      <h2 className="text-xl font-semibold  mb-2">
+        <span className="underline"> No. of Tasks yet to be done: </span>
+        <span>{incompleteTodo.length}</span>
+      </h2>
       <ul>
-        {todoState.map((todo: TTodo, i) => {
+        {incompleteTodo.map((todo: TTodo, i) => {
           if (!todo.isCompleted) {
             return (
               <li
@@ -44,7 +50,14 @@ const ShowTodo = () => {
                   >
                     Mark as complete
                   </button>
-                  <button className="badge badge-error ms-4">delete</button>
+                  <button
+                    onClick={() => {
+                      deleteTodo(todo.id, todoDispatch);
+                    }}
+                    className="badge badge-error ms-4"
+                  >
+                    delete
+                  </button>
                 </span>
               </li>
             );

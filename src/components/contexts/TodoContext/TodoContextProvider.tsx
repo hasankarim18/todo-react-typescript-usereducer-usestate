@@ -1,23 +1,11 @@
 import { createContext, useReducer } from "react";
 import { typeConstants } from "../../constants/constants";
-import { TodoProviderProps, TTodo } from "../../types/totoTypes";
-
-type AddAction = {
-  type: typeof typeConstants.ADD_TODO;
-  payload: TTodo;
-};
-
-type ToggleTaskCompletion = {
-  type: typeof typeConstants.TASK_COMPLETTION_TOGGLE;
-  payload: string;
-};
-
-type TAction = AddAction | ToggleTaskCompletion;
-
-type TDefaultValue = {
-  todoState: TTodo[];
-  todoDispatch: React.Dispatch<TAction>;
-};
+import {
+  TAction,
+  TDefaultValue,
+  TodoProviderProps,
+  TTodo,
+} from "../../types/totoTypes";
 
 const defaultValue: TDefaultValue = {
   todoState: [],
@@ -42,7 +30,7 @@ const todoReducer = (state: TTodo[], action: TAction): TTodo[] => {
         }
       });
     case typeConstants.DELETE_TODO:
-      return state;
+      return state.filter((todo) => todo.id !== action.payload);
 
     default:
       return state;

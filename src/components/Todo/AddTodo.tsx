@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { typeConstants } from "../constants/constants";
 import { TodoContext } from "../contexts/TodoContext/TodoContextProvider";
 
@@ -6,11 +6,11 @@ const AddTodo = () => {
   const { todoDispatch } = useContext(TodoContext);
   const [title, setTitle] = useState("");
 
-  const changeHandler = (e) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const todo = {
